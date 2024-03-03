@@ -9,10 +9,13 @@ function PaginationTable() {
   const rowsPerPage = 10;
 
   useEffect(() => {
-    if (data.length === 0) {
-      fetchData();
-    }
+    fetchData();
   }, [currentPage]);
+  
+  useEffect(() => {
+    setTotalPages(Math.ceil(data.length / rowsPerPage));
+  }, [data, rowsPerPage]);
+  
 
   async function fetchData() {
     try {
@@ -34,7 +37,7 @@ function PaginationTable() {
   }
 
   function handlePrevious() {
-    if (currentPage > 1) {
+    if (currentPage >1) {
       setCurrentPage(currentPage - 1);
     }
   }
@@ -50,40 +53,39 @@ function PaginationTable() {
   const currentData = data.slice(startIndex, endIndex);
 
   return (
-    <div>
-        <h1>Employee Data Table</h1>
-      <table >
-        <div className={Styles.topRow} >
-            <thead >
-                <tr>
-                    <th>ID</th>
-                    <th>Name</th>
-                    <th>Email</th>
-                    <th>Role</th>
-                </tr>
-            </thead>
-        </div>
-        
-        <tbody>
-          {loading ? (
+    <div className={Styles.wrapper}>
+      <h1>Employee Data Table</h1>
+      <div className={Styles.topRow}>
+        <table>
+          <thead>
             <tr>
-              <td colSpan="3">Loading...</td>
+              <th>ID</th>
+              <th>Name</th>
+              <th>Email</th>
+              <th>Role</th>
             </tr>
-          ) : (
-            currentData.map((item) => (
-              <tr key={item.id}>
-                <td>{item.id}</td>
-                <td>{item.name}</td>
-                <td>{item.email}</td>
-                <td>{item.role}</td>
+          </thead>
+          <tbody>
+            {loading ? (
+              <tr>
+                <td colSpan="4">Loading...</td>
               </tr>
-            ))
-          )}
-        </tbody>
-      </table>
+            ) : (
+              currentData.map((item) => (
+                <tr key={item.id}>
+                  <td>{item.id}</td>
+                  <td>{item.name}</td>
+                  <td>{item.email}</td>
+                  <td>{item.role}</td>
+                </tr>
+              ))
+            )}
+          </tbody>
+        </table>
+      </div>
       <div className={Styles.btn}>
-        <button onClick={handlePrevious} disabled={currentPage === 1}>
-         Previous
+        <button onClick={handlePrevious} disabled="">
+          Previous
         </button>
         <p>{currentPage}</p>
         <button onClick={handleNext} disabled={currentPage === totalPages}>
