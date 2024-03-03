@@ -9,7 +9,9 @@ function PaginationTable() {
   const rowsPerPage = 10;
 
   useEffect(() => {
-    fetchData();
+    if (data.length === 0) {
+      fetchData();
+    }
   }, [currentPage]);
 
   async function fetchData() {
