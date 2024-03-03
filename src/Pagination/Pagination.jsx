@@ -51,7 +51,7 @@ function PaginationTable() {
     <div>
         <h1>Employee Data Table</h1>
       <table >
-        <div className={Styles.topRow}>
+        <div className={Styles.topRow} >
             <thead >
                 <tr>
                     <th>ID</th>
@@ -81,7 +81,7 @@ function PaginationTable() {
       </table>
       <div className={Styles.btn}>
         <button onClick={handlePrevious} disabled={currentPage === 1}>
-          Previous
+         Previous
         </button>
         <p>{currentPage}</p>
         <button onClick={handleNext} disabled={currentPage === totalPages}>
